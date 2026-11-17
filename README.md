@@ -1,5 +1,23 @@
 # finANTzas Web
 
+## Taller de Proyecto de Especialidad
+
+**finANTzas Web** es un prototipo web creado para la asignatura **Taller de Proyecto de Especialidad**. El proyecto se desarrolla como una experiencia de estudio y aprendizaje, tomando como referencia la aplicación móvil finANTzas y adaptando sus funcionalidades al entorno web.
+
+Su objetivo es explorar una plataforma de control financiero personal: presupuesto mensual, registro de gastos, alertas de gasto hormiga, análisis de ahorro y visualización de cuentas. No corresponde a un producto financiero comercial ni realiza conexiones bancarias reales.
+
+### Integrantes
+
+- Álvaro Brizuela
+- Enrique Ahumada
+- Jocelyn González
+
+### Prototipo en línea
+
+El prototipo está disponible en: [https://jocelyn-011.github.io/finantzas-web/](https://jocelyn-011.github.io/finantzas-web/)
+
+---
+
 Aplicación web responsive inspirada en la interfaz móvil de Finantzas. Está construida con HTML5, CSS y JavaScript sin framework, y queda preparada para sincronizar movimientos con Supabase.
 
 ## Ejecutar localmente
@@ -27,20 +45,6 @@ No incluyas nunca la clave `service_role` en el navegador. El esquema activa RLS
 ## Cuentas bancarias en la web
 
 La sección **Cuentas y conexiones** reemplaza el NFC de la aplicación móvil. En web, una integración real debe usar un proveedor de Open Finance que redirija al banco para el consentimiento del usuario (OAuth), con los secretos y tokens guardados en una función de servidor. Esta versión no solicita ni simula claves bancarias: permite probar la experiencia con datos locales y deja `bank_accounts` preparado en Supabase.
-
-## Subir a GitHub
-
-Este directorio todavía no tiene un remoto. Crea primero un repositorio vacío en GitHub y luego, desde esta carpeta, ejecuta:
-
-```powershell
-git add .
-git commit -m "feat: panel web de Finantzas"
-git branch -M main
-git remote add origin https://github.com/TU-USUARIO/TU-REPOSITORIO.git
-git push -u origin main
-```
-
-También puedes enviarme la URL del repositorio vacío y podré dejar el remoto configurado; no compartas tokens ni contraseñas.
 
 ## Características
 
