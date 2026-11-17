@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#062932" />
+    <meta name="description" content="Finantzas: presupuesto, pagos y ahorro en un solo lugar." />
+    <title>finANTzas | Control financiero</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="desktop-sidebar" aria-label="Navegación de escritorio">
+        <button class="brand side-brand" data-view="home" aria-label="Ir al inicio"><span>fin</span><strong>ANT</strong><span>zas</span><i>✦</i></button>
+        <p class="sidebar-label">Panel financiero</p>
+        <nav class="side-nav">
+          <button class="active" data-view="home"><i>⌂</i>Resumen</button>
+          <button data-view="transactions"><i>↔</i>Movimientos</button>
+          <button data-view="nfc"><i>▤</i>Cuentas</button>
+          <button data-view="analytics"><i>▥</i>Análisis</button>
+          <button data-view="settings"><i>⚙</i>Configuración</button>
+        </nav>
+        <div class="sidebar-help"><span>◈</span><div><b>Datos protegidos</b><small>Cifrado y permisos por cuenta</small></div></div>
+      </aside>
+      <header class="topbar">
+        <button class="brand" data-view="home" aria-label="Ir al inicio"><span>fin</span><strong>ANT</strong><span>zas</span><i>✦</i></button>
+        <div class="top-actions"><button class="icon-button" id="notificationBtn" aria-label="Notificaciones">♟</button><button class="avatar" data-view="settings" aria-label="Abrir ajustes">⌂</button></div>
+      </header>
+
+      <section id="home" class="view active" aria-labelledby="home-title">
+        <div class="greeting"><p>Tu centro de control</p><h1 id="home-title">¡Hola, <span data-user-name>Usuario</span>!</h1></div>
+        <article class="card hero-card">
+          <div class="eyebrow"><span>Presupuesto mensual</span><b id="budgetStatus">Controlado · 32%</b></div>
+          <strong class="balance" id="budgetTotal">$600.000 <small>CLP</small></strong>
+          <div class="progress"><span id="budgetProgress"></span></div>
+          <div class="card-footer"><span>Consumido: <em id="spentTotal">$190.000 CLP</em></span><b id="spentPercent">32%</b></div>
+        </article>
+        <div class="grid two-columns">
+          <article class="card summary-card"><h2>Categorías</h2><div class="ring"><span id="categoryCount">1</span></div><button class="text-link" data-view="analytics">Ver desglose CLP</button></article>
+          <article class="card alert-card"><div class="warning-icon">△</div><h2>Alerta Gasto<br />Hormiga</h2><strong id="microSpent">$0 CLP</strong><p>(RN-02 / RN-03)</p><small>0 alertas detectadas</small></article>
+        </div>
+        <article class="card simulator-preview">
+          <div class="section-title"><h2>Simulador rápido</h2><button class="text-link" data-view="analytics">Ir a Análisis →</button></div>
+          <div class="segment-control" data-savings-segment><button data-rate="25">25%</button><button class="selected" data-rate="50">50%</button><button data-rate="100">100%</button></div>
+          <div class="card-footer"><span>Ahorro anual proyectado (<span id="previewRate">50</span>%):</span><b id="previewSavings">$420.000 CLP</b></div>
+        </article>
+        <article class="card recent-card"><div class="section-title"><h2>Transacciones recientes</h2><button class="text-link" data-view="transactions">Ver todas</button></div><div id="recentTransactions"></div></article>
+      </section>
+
+      <section id="transactions" class="view" aria-labelledby="transactions-title">
+        <div class="page-heading"><p>Registra y administra</p><h1 id="transactions-title">Tus transacciones</h1></div>
+        <form id="expenseForm" class="card expense-form">
+          <h2>Registrar nuevo gasto</h2>
+          <label>Concepto<input id="expenseName" required maxlength="50" placeholder="Ej. Café de la mañana" /></label>
+          <div class="form-grid"><label>Monto ($)<input id="expenseAmount" type="number" min="1" required placeholder="3500" /></label><label>Frecuencia<select id="expenseFrequency"><option value="Mensual fijo">Mensual fijo</option><option value="Semanal">4 veces/sem</option><option value="Único">Una vez</option></select></label></div>
+          <div class="form-grid"><label>Categoría<select id="expenseCategory"><option>Vivienda y servicios</option><option>Alimentación</option><option>Transporte</option><option>Micro-compras</option><option>Entretenimiento</option></select></label><label>Medio de pago<select id="expensePayment"><option>Débito</option><option>Crédito</option><option>Efectivo</option></select></label></div>
+          <div class="form-toggle"><div><b>¿Es Gasto Hormiga? (RN-02)</b><span>Impacto mensual: <span id="monthlyImpact">$0 CLP</span></span></div><input id="microToggle" type="checkbox" role="switch" /></div>
+          <button class="primary-button" type="submit">＋ Registrar gasto</button>
+        </form>
+        <div class="section-title history-heading"><h2>Historial de pagos (<span id="transactionCount">0</span>)</h2></div>
+        <div class="filter-pills" id="transactionFilters"><button class="selected" data-filter="Todos">Todos</button><button data-filter="Hormiga">Hormiga</button><button data-filter="Suscripciones">Suscripciones</button><button data-filter="Débito">Pago · Débito</button></div>
+        <div class="transaction-list" id="transactionList"></div>
+      </section>
+
+      <section id="nfc" class="view accounts-view" aria-labelledby="accounts-title">
+        <div class="page-heading web-heading"><div><p>Integración segura vía Open Finance</p><h1 id="accounts-title">Cuentas y conexiones</h1><span>Consulta saldos y movimientos en un solo lugar.</span></div><button class="primary-button compact-button" id="showConnectAccount">＋ Vincular cuenta</button></div>
+        <article class="connect-notice"><span>◇</span><div><b>Así funciona la conexión bancaria</b><p>Finantzas nunca solicita ni almacena tu clave. La autorización se realiza en el sitio de tu banco mediante OAuth/Open Banking.</p></div><button id="syncAccounts">Sincronizar</button></article>
+        <article id="connectAccountPanel" class="card connect-account-panel" hidden>
+          <div class="section-title"><h2>Vincular una cuenta</h2><button class="text-link" id="hideConnectAccount">Cerrar</button></div>
+          <form id="accountForm" class="account-form"><label>Institución<select id="accountInstitution"><option value="BancoEstado">BancoEstado</option><option value="Banco Santander">Banco Santander</option><option value="BCI">BCI</option><option value="Banco de Chile">Banco de Chile</option><option value="Tenpo">Tenpo</option></select></label><label>Nombre de la cuenta<input id="accountName" maxlength="40" required placeholder="Ej. Cuenta principal" /></label><div class="form-grid"><label>Últimos 4 dígitos<input id="accountLastFour" inputmode="numeric" maxlength="4" required placeholder="4829" /></label><label>Saldo disponible<input id="accountBalance" type="number" min="0" required placeholder="600000" /></label></div><button class="primary-button" type="submit">Guardar conexión de demostración</button></form>
+        </article>
+        <div class="account-summary"><div><span>Patrimonio disponible</span><b id="totalAccountBalance">$0 CLP</b><small>En cuentas conectadas</small></div><div><span>Conexiones activas</span><b id="accountCount">0</b><small id="accountSyncStatus">Datos actualizados hoy</small></div><div><span>Próxima sincronización</span><b>Automática</b><small>Al abrir tu panel</small></div></div>
+        <div class="section-title accounts-list-heading"><h2>Tus cuentas</h2><button class="text-link" id="refreshAccounts">↻ Actualizar datos</button></div>
+        <div class="accounts-grid" id="accountsList"></div>
+        <article class="card data-safety-card"><div class="safety-icon">⌘</div><div><h2>Tu información permanece bajo tu control</h2><p>Usamos tokenización y acceso limitado por consentimiento. Puedes desconectar una cuenta cuando quieras.</p></div><button class="outline-button" id="securityInfo">Ver seguridad</button></article>
+      </section>
+
+      <section id="analytics" class="view" aria-labelledby="analytics-title">
+        <div class="page-heading"><p>Entiende tu dinero</p><h1 id="analytics-title">Análisis y ahorro</h1></div>
+        <div class="grid two-columns"><article class="card metric-card"><span>Resumen de gastos ↘</span><b id="analysisSpent">$190.000 CLP</b><small>Total mensual CLP</small></article><article class="card metric-card savings"><span>Ahorro anual proyectado ↗</span><b id="analysisSavings">$420.000 CLP</b><small>Reduciendo gasto hormiga</small></article></div>
+        <article class="card simulator-card"><h2>Simulador de ahorro</h2><div class="segment-control" data-savings-segment><button data-rate="25">25%</button><button class="selected" data-rate="50">50%</button><button data-rate="100">100%</button></div><div class="toggle-row"><b>Quick actions</b><input id="quickActions" type="checkbox" role="switch" checked /></div><label class="range-label">Meta mensual (% de reducción)<b id="reductionValue">50%</b><input id="reductionRange" type="range" min="0" max="100" value="50" /></label><label class="range-label">Plazo estimado (meses)<b id="monthsValue">12 meses</b><input id="monthsRange" type="range" min="1" max="24" value="12" /></label><div class="chart-label">Proyección acumulada (Mes 1 a Mes <span id="chartMonths">12</span>)</div><div class="line-chart" id="lineChart"><svg viewBox="0 0 300 130" preserveAspectRatio="none" aria-label="Gráfico de proyección de ahorro"><path class="gridline" d="M0 25H300M0 65H300M0 105H300M0 0V130M100 0V130M200 0V130M300 0V130"/><path id="lineLow" d="M0 120 L300 90"/><path id="lineMiddle" d="M0 120 L300 55"/><path id="lineHigh" d="M0 120 L300 15"/></svg></div><div class="legend"><span>● 25%</span><span>● 50%</span><span>● 100%</span></div><div class="projection-total"><span>Ahorro mensual (<span id="projectionRate">50</span>%):</span><b id="monthlySavings">$35.000 CLP</b><span>Proyección (<span id="projectionMonths">12</span> m / Anual):</span><b id="annualSavings">$420.000 / $420.000 CLP</b></div></article>
+        <article class="card charts-card"><h2>Gastos por categoría y medios de pago</h2><div class="donut-grid"><div><b>Categorías</b><div class="donut"><span id="categoryDonut">$190.000</span></div><small>● Vivienda y servicios</small></div><div><b>Medios de pago</b><div class="donut"><span id="paymentDonut">$190.000</span></div><small>● Tarjeta de Débito</small></div></div><p class="ranking">Ranking % de Fuga Gasto Hormiga por Medio de Pago (RN-04):</p><small>• Tarjeta de Débito: <span id="leakPercent">0%</span> ($<span id="leakAmount">0</span> CLP)</small></article>
+        <article class="card flow-card"><div class="section-title"><h2>Flujo de dinero</h2><b id="flowIncome">$190.000 CLP</b></div><div class="flow-labels"><span>Ingresos ($190.000)</span><span>Flujo central</span><span>Gastos / Ahorros</span></div><div class="flow-visual"><i></i><i></i><i></i></div><div class="flow-key"><span>● Gastos / Fuga Hormiga <b id="flowLeak">$0 CLP (0%)</b></span><span>● Ahorros / Gasto Esencial <b id="flowEssential">$190.000 CLP (100%)</b></span></div></article>
+        <section class="budgets-section"><h2>Alertas y Presupuestos (CLP)</h2><div id="budgetCards"></div></section>
+      </section>
+
+      <section id="settings" class="view" aria-labelledby="settings-title">
+        <div class="page-heading"><p>Personaliza tu experiencia</p><h1 id="settings-title">Ajustes y configuración</h1></div>
+        <article class="card profile-card"><h2>Perfil de la cuenta</h2><div class="profile-row"><span class="large-avatar">♙</span><div><b data-user-name>Usuario</b><small id="userEmail">usuario@email.com</small><em>Presupuesto base: <span id="profileBudget">$600.000 CLP</span></em></div></div><div class="profile-actions"><button class="outline-button" id="editProfileBtn">Editar perfil / CLP</button><button class="danger-button" id="signOutBtn">Cerrar sesión</button></div></article>
+        <article class="card appearance-card"><h2>Apariencia: Claro u Oscuro</h2><div class="theme-options"><button id="lightTheme"><b>Claro</b><span>● $600.000 CLP</span></button><button id="darkTheme" class="selected"><b>Oscuro petrol <i>✓</i></b><span>● $600.000 CLP</span></button></div></article>
+        <article class="card settings-list"><button><span>♧</span><div><b>Notificaciones</b><small>Alertas ≥70%, ≥90% y Motor Hormiga</small></div><i>›</i></button><button><span>ⓘ</span><div><b>Acerca de</b><small>v1.0.0-web · Equipo AIEP y Arquitectura</small></div><i>›</i></button><button><span>?</span><div><b>Ayuda y comentarios</b><small>Preguntas frecuentes (FAQ), calificación y soporte</small></div><i>›</i></button><button><span>♜</span><div><b>Política de privacidad</b><small>Ley N° 19.628 / N° 21.719, SQLCipher AES-256 y RLS</small></div><i>›</i></button><button><span>▤</span><div><b>Condiciones de uso</b><small>Términos en CLP, Ley Fintech N° 21.521 y AIEP</small></div><i>›</i></button></article>
+      </section>
+
+      <nav class="bottom-nav" aria-label="Navegación principal"><button class="active" data-view="home"><i>⌂</i><span>Inicio</span></button><button data-view="transactions"><i>↔</i><span>Movimientos</span></button><button data-view="nfc"><i>▤</i><span>Cuentas</span></button><button data-view="analytics"><i>▥</i><span>Análisis</span></button><button data-view="settings"><i>⚙</i><span>Ajustes</span></button></nav>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
